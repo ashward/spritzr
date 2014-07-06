@@ -1,0 +1,10 @@
+{
+  "name": "spritz",
+  "version": "0.0.1",
+  "authors": [
+    "Ash Ward <ash.wardly@gmail.com>"
+  ],
+  "main": "build/spritz.js",
+  "license": "GPL3",
+  "private": true
+}
