@@ -271,13 +271,13 @@ describe("Spritzr", function() {
 			expect(test.method()).toBe("talent");			
 		});
 		
-		it('can override trait method with a talent', function() {
+		it('can remove a talent', function() {
 			var TestClass = function() {};
 			
 			var TestTrait = function() {};
 			TestTrait.prototype.method = function() {
 				return "trait";
-			}
+			};
 			
 			Spritzr.spritz(TestClass, TestTrait);
 			
@@ -288,14 +288,144 @@ describe("Spritzr", function() {
 			
 			var test = new TestClass();
 			
-			expect(test.method()).toBe("trait");			
-
+			Spritzr.spritz(test, TestTalent);
+			Spritzr.unspritz(test, TestTalent);
+		
+			expect(Spritzr.isa(test, TestTalent)).toBe(false);
+		});
+		
+		it('reinstantes class method when talent removed', function() {
+			var TestClass = function() {};
+			TestClass.prototype.method = function() {
+				return "class";
+			};
+			
+			var TestTalent = function() {};
+			TestTalent.prototype.method = function() {
+				return "talent";
+			};
+			
+			var test = new TestClass();
+			
 			Spritzr.spritz(test, TestTalent);
 			
 			expect(test.method()).toBe("talent");			
-		});
 
+			Spritzr.unspritz(test, TestTalent);
+
+			expect(test.method()).toBe("class");			
+		});
 		
+		it('reinstantes trait method when talent removed', function() {
+			var TestClass = function() {};
+			TestClass.prototype.method = function() {
+				return "class";
+			};
+			
+			var TestTrait = function() {};
+			TestTrait.prototype.method = function() {
+				return "trait";
+			};
+
+			Spritzr.spritz(TestClass, TestTrait);
+			
+			var TestTalent = function() {};
+			TestTalent.prototype.method = function() {
+				return "talent";
+			};
+			
+			var test = new TestClass();
+			
+			Spritzr.spritz(test, TestTalent);
+			
+			expect(test.method()).toBe("talent");			
+
+			Spritzr.unspritz(test, TestTalent);
+
+			expect(test.method()).toBe("trait");			
+		});
+		
+		it('reinstantes superclass method when talent removed', function() {
+			var SuperClass = function() {};
+			SuperClass.prototype.method = function() {
+				return "super";
+			};
+
+			var TestClass = function() {};
+			Spritzr.extend(TestClass, SuperClass);
+			
+			var TestTalent = function() {};
+			TestTalent.prototype.method = function() {
+				return "talent";
+			};
+			
+			var test = new TestClass();
+			
+			Spritzr.spritz(test, TestTalent);
+			
+			expect(test.method()).toBe("talent");			
+
+			Spritzr.unspritz(test, TestTalent);
+
+			expect(test.method()).toBe("super");			
+		});
+		
+		it('reinstantes overridden talent methods', function() {
+			var TestClass = function TestClass() {};
+			
+			var TestTalent1 = function TestTalent1() {};
+			TestTalent1.prototype.method = function() {
+				return "talent1";
+			};
+
+			var TestTalent2 = function TestTalent2() {};
+			TestTalent2.prototype.method = function() {
+				return "talent2";
+			};
+
+			var test = new TestClass();
+			
+			Spritzr.spritz(test, TestTalent1);
+			Spritzr.spritz(test, TestTalent2);
+			
+			expect(test.method()).toBe("talent2");		// Should be the last one added	
+
+			Spritzr.unspritz(test, TestTalent2);
+
+			expect(test.method()).toBe("talent1");			
+		});
+		
+		it('doesn\'t mess with method if talent method not visible', function() {
+			var TestClass = function TestClass() {};
+			TestClass.prototype.method = function() {
+				return "class";
+			};
+			
+			var TestTalent1 = function TestTalent1() {};
+			TestTalent1.prototype.method = function() {
+				return "talent1";
+			};
+
+			var TestTalent2 = function TestTalent2() {};
+			TestTalent2.prototype.method = function() {
+				return "talent2";
+			};
+
+			var test = new TestClass();
+			
+			Spritzr.spritz(test, TestTalent1);
+			Spritzr.spritz(test, TestTalent2);
+			
+			expect(test.method()).toBe("talent2");		// Should be the last one added	
+
+			Spritzr.unspritz(test, TestTalent1);
+
+			expect(test.method()).toBe("talent2");
+			
+			Spritzr.unspritz(test, TestTalent2);
+
+			expect(test.method()).toBe("class");			
+		});
 	});
 	
 	describe("isa() method", function() {	

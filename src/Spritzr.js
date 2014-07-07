@@ -7,14 +7,20 @@ require("./Polyfill");
 				return arguments.callee.caller.prototype.apply(this, arguments);
 			}
 		},
+		
+		/**
+		 * This is a marker for tracking methods overwritten by talents
+		 */
+		_noPreviousMethod : {},
 			
 		/**
 		 * Extends SubClass with superClass in a single-inheritance model. Note
 		 * that this implements prototype inheritance (like Prototype.js) rather
-		 * than just copying properties (like jQuery).
-		 * <aside>Not sure how good an idea this is, but let's roll with it!</aside>
-		 * <p>Also adds a property '<code>$super</code>' to the prototype to allow
-		 * access to the superclass methods.
+		 * than just copying properties (like jQuery). <aside>Not sure how good
+		 * an idea this is, but let's roll with it!</aside>
+		 * <p>
+		 * Also adds a property '<code>$super</code>' to the prototype to
+		 * allow access to the superclass methods.
 		 * 
 		 * @param subject
 		 *            the sub class to extend
@@ -32,7 +38,9 @@ require("./Polyfill");
 
 						// Copy any existing prototype properties across
 						for ( var i in prevProto) {
-							this[i] = prevProto[i];
+							if(prevProto.hasOwnProperty(i)) {
+								this[i] = prevProto[i];
+							}
 						}
 						
 						// Set up the faux "$super" reference
@@ -103,22 +111,83 @@ require("./Polyfill");
 					}
 				}
 
-				spritz.traits[obj] = obj;
+				spritz.traits.push(obj);
 			} else {
 				var spritz = Spritzr._getSpritzrVarCreate(subject);
 
+				var getPropsFrom;
+				
 				if (typeof (obj) == "function") {
-					for ( var key in obj.prototype) {
-						subject[key] = obj.prototype[key];
-					}
+					getPropsFrom = obj.prototype;
 				} else {
-					for ( var key in obj) {
-						subject[key] = obj[key];
-					}
+					getPropsFrom = onj;
 				}
 
-				spritz.talents[obj] = obj;
+				for ( var key in getPropsFrom) {
+					if(typeof spritz.removed[key] == "undefined") {
+						if((typeof subject[key] !== "undefined")
+							&& subject.hasOwnProperty(key)) {
+							spritz.removed[key] = subject[key];
+						} else {
+							spritz.removed[key] = Spritzr._noPreviousMethod;
+						}
+					}
+					subject[key] = getPropsFrom[key];
+				}
 
+				spritz.talents.push(obj);
+			}
+		},
+		
+		/**
+		 * Does the opposite of <code>spritz()</code>, although currently only removes talents
+		 * from instances (does not work on traits on classes).
+		 * 
+		 * @param subject
+		 * @param obj
+		 */
+		unspritz : function(subject, obj) {
+			if (typeof (subject) != "function") {
+				var spritz = Spritzr._getSpritzrVar(subject);
+				
+				if(spritz) {
+					var i = spritz.talents.indexOf(obj);
+					if(i > -1) {
+						spritz.talents.splice(i, 1);
+					}
+				}
+				
+				// Go through all the talent properties and reinstate existing methods
+				for(key in obj.prototype) {
+					// Check if the defined method is actually the trait method
+					if(subject[key] === obj.prototype[key]) {
+						var found = false;
+						
+						for(var i = spritz.talents.length - 1; i >= 0; --i) {
+							var talent = spritz.talents[i];
+							
+							if(typeof talent.prototype[key] !== "undefined") {
+								subject[key] = talent.prototype[key];
+								found = true;
+								break;
+							}
+						}
+						
+						if(!found) {
+							if(typeof spritz.removed[key] !== 'undefined') {
+								if(spritz.removed[key] === Spritzr._noPreviousMethod) {
+									// The object previously didn't have the method defined.
+									delete subject[key];
+								} else {
+									subject[key] = spritz.removed[key];
+								}
+								delete spritz.removed[key];
+							} else {
+								delete subject[key];
+							}
+						}
+					}
+				}
 			}
 		},
 
@@ -142,7 +211,7 @@ require("./Polyfill");
 
 			var spritz = Spritzr._getSpritzrVar(instance);
 
-			if (spritz && spritz.talents[type]) {
+			if (spritz && (spritz.talents.indexOf(type) > -1)) {
 				return true;
 			}
 
@@ -176,7 +245,7 @@ require("./Polyfill");
 			}
 
 			// If we have that trait
-			if (spritz.traits[type]) {
+			if (spritz.traits.indexOf(type) > -1) {
 				return true;
 			}
 
@@ -200,8 +269,10 @@ require("./Polyfill");
 				obj._$spritz = {
 					parent : null,
 
-					traits : {},
-					talents : {}
+					traits : [],
+					talents : [],
+					
+					removed : {}
 				};
 			}
 
@@ -213,18 +284,10 @@ require("./Polyfill");
 		}
 	};
 /*
-	// Support node.js, AMD and plain ol' JS.
-	if (typeof module !== 'undefined' && typeof module.exports !== 'undefined') {
-		module.exports = Spritzr;
-	} else {
-		if (typeof define === 'function' && define.amd) {
-			define([], function() {
-				return Spritzr;
-			});
-		} else {
-			window.Spritzr = Spritzr;
-		}
-	}
-*/
+ * // Support node.js, AMD and plain ol' JS. if (typeof module !== 'undefined' &&
+ * typeof module.exports !== 'undefined') { module.exports = Spritzr; } else {
+ * if (typeof define === 'function' && define.amd) { define([], function() {
+ * return Spritzr; }); } else { window.Spritzr = Spritzr; } }
+ */
 	module.exports = Spritzr;
 })();
