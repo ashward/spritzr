@@ -1,4 +1,6 @@
 # Spritzr
+## Build Status
+[![Build Status](https://travis-ci.org/ashward/spritzr.svg?branch=master)](https://travis-ci.org/ashward/spritzr)
 ## API
 ### Inheritance
 Spritzr has an `extend` function which implements a basic single inheritance model.
