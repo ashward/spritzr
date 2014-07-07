@@ -1,6 +1,6 @@
-var Spritz = require("../src/Spritz.js");
+var Spritzr = require("../src/Spritzr.js");
 
-describe("Spritz", function() {
+describe("Spritzr", function() {
 	describe("Inheritance", function() {
 		it("can extend a class", function() {
 			var SuperClass = function() {};
@@ -11,7 +11,7 @@ describe("Spritz", function() {
 			
 			var SubClass = function() {};
 			
-			Spritz.extend(SubClass, SuperClass);
+			Spritzr.extend(SubClass, SuperClass);
 			
 			var instance = new SubClass();
 			
@@ -22,10 +22,10 @@ describe("Spritz", function() {
 			var SuperSuperClass = function() {};
 			
 			var SuperClass = function() {};
-			Spritz.extend(SuperClass, SuperSuperClass);
+			Spritzr.extend(SuperClass, SuperSuperClass);
 
 			var SubClass = function() {};
-			Spritz.extend(SubClass, SuperClass);
+			Spritzr.extend(SubClass, SuperClass);
 
 			var test = new SubClass();
 			
@@ -49,7 +49,7 @@ describe("Spritz", function() {
 				this.test1 = "sub";
 			};
 			
-			Spritz.extend(SubClass, SuperClass);
+			Spritzr.extend(SubClass, SuperClass);
 			
 			var instance = new SubClass();
 			
@@ -65,7 +65,7 @@ describe("Spritz", function() {
 			};
 
 			var SubClass = function() {};
-			Spritz.extend(SubClass, SuperClass);
+			Spritzr.extend(SubClass, SuperClass);
 			
 			SubClass.prototype.test = function() {
 				return 'sub';
@@ -91,7 +91,7 @@ describe("Spritz", function() {
 				return this.$super.test();
 			};
 			
-			Spritz.extend(SubClass, SuperClass);
+			Spritzr.extend(SubClass, SuperClass);
 
 			var test = new SubClass();
 
@@ -107,7 +107,7 @@ describe("Spritz", function() {
 				return "sub";
 			};
 			
-			Spritz.extend(SubClass, SuperClass);
+			Spritzr.extend(SubClass, SuperClass);
 			
 			var instance = new SubClass();
 			
@@ -127,7 +127,7 @@ describe("Spritz", function() {
 				return "sub";
 			};
 			
-			Spritz.extend(SubClass, SuperClass);
+			Spritzr.extend(SubClass, SuperClass);
 			
 			var instance = new SubClass();
 			
@@ -151,7 +151,7 @@ describe("Spritz", function() {
 			};
 			SubClass.prototype.test = null;
 			
-			Spritz.extend(SubClass, SuperClass);
+			Spritzr.extend(SubClass, SuperClass);
 			
 			var instance = new SubClass();
 			
@@ -172,7 +172,7 @@ describe("Spritz", function() {
 				called = true;
 			};
 			
-			Spritz.spritz(TestClass, Trait);
+			Spritzr.spritz(TestClass, Trait);
 			
 			var test = new TestClass();
 			
@@ -191,7 +191,7 @@ describe("Spritz", function() {
 					this.prop = true;
 			};
 			
-			Spritz.spritz(TestClass, Trait);
+			Spritzr.spritz(TestClass, Trait);
 			
 			var test = new TestClass();
 			
@@ -211,7 +211,7 @@ describe("Spritz", function() {
 					return this.test;
 			};
 			
-			Spritz.spritz(TestClass, Trait);
+			Spritzr.spritz(TestClass, Trait);
 			
 			var test = new TestClass();
 			
@@ -229,7 +229,7 @@ describe("Spritz", function() {
 			Trait.prototype.prop = false;
 			Trait.prototype.test = 'test';
 			
-			Spritz.spritz(TestClass, Trait);
+			Spritzr.spritz(TestClass, Trait);
 			
 			var test = new TestClass();
 			
@@ -248,7 +248,7 @@ describe("Spritz", function() {
 			
 			var test = new TestClass();
 			
-			Spritz.spritz(test, TestTalent);
+			Spritzr.spritz(test, TestTalent);
 			
 			expect(test.method()).toBe("test");
 		});
@@ -266,7 +266,7 @@ describe("Spritz", function() {
 			
 			var test = new TestClass();
 			
-			Spritz.spritz(test, TestTalent);
+			Spritzr.spritz(test, TestTalent);
 			
 			expect(test.method()).toBe("talent");			
 		});
@@ -279,7 +279,7 @@ describe("Spritz", function() {
 				return "trait";
 			}
 			
-			Spritz.spritz(TestClass, TestTrait);
+			Spritzr.spritz(TestClass, TestTrait);
 			
 			var TestTalent = function() {};
 			TestTalent.prototype.method = function() {
@@ -290,7 +290,7 @@ describe("Spritz", function() {
 			
 			expect(test.method()).toBe("trait");			
 
-			Spritz.spritz(test, TestTalent);
+			Spritzr.spritz(test, TestTalent);
 			
 			expect(test.method()).toBe("talent");			
 		});
@@ -304,77 +304,77 @@ describe("Spritz", function() {
 			
 			var test = new TestClass();
 			
-			expect(Spritz.isa(test, TestClass)).toBe(true);
-			expect(Spritz.isa(test, String)).toBe(false);
+			expect(Spritzr.isa(test, TestClass)).toBe(true);
+			expect(Spritzr.isa(test, String)).toBe(false);
 		});
 		
 		it('works for a super class', function() {
 			var SuperClass = function() {};
 			
 			var SubClass = function() {};
-			Spritz.extend(SubClass, SuperClass);
+			Spritzr.extend(SubClass, SuperClass);
 
 			var test = new SubClass();
 			
-			expect(Spritz.isa(test, SuperClass)).toBe(true);
-			expect(Spritz.isa(test, String)).toBe(false);
+			expect(Spritzr.isa(test, SuperClass)).toBe(true);
+			expect(Spritzr.isa(test, String)).toBe(false);
 		});
 		
 		it('works for a trait in the given class', function() {
 			var TestClass = function() {};
 			var Trait = function() {};
 			
-			Spritz.spritz(TestClass, Trait);
+			Spritzr.spritz(TestClass, Trait);
 
 			var test = new TestClass();
 			
-			expect(Spritz.isa(test, Trait)).toBe(true);
-			expect(Spritz.isa(test, String)).toBe(false);
+			expect(Spritzr.isa(test, Trait)).toBe(true);
+			expect(Spritzr.isa(test, String)).toBe(false);
 		});
 		
 		it('works for a trait in the given super class', function() {
 			var SuperClass = function() {};
 			var Trait = function() {};
 			
-			Spritz.spritz(SuperClass, Trait);
+			Spritzr.spritz(SuperClass, Trait);
 			
 			var SubClass = function() {};
-			Spritz.extend(SubClass, SuperClass);
+			Spritzr.extend(SubClass, SuperClass);
 
 			var test = new SubClass();
 			
-			expect(Spritz.isa(test, Trait)).toBe(true);
-			expect(Spritz.isa(test, String)).toBe(false);
+			expect(Spritzr.isa(test, Trait)).toBe(true);
+			expect(Spritzr.isa(test, String)).toBe(false);
 		});
 		
 		it('works for a trait on a trait', function() {
 			var SuperTrait = function() {};
 			var Trait = function() {};
 			
-			Spritz.spritz(Trait, SuperTrait);
+			Spritzr.spritz(Trait, SuperTrait);
 			
 			var SubClass = function() {};
-			Spritz.spritz(SubClass, Trait);
+			Spritzr.spritz(SubClass, Trait);
 
 			var test = new SubClass();
 			
-			expect(Spritz.isa(test, SuperTrait)).toBe(true);
-			expect(Spritz.isa(test, String)).toBe(false);
+			expect(Spritzr.isa(test, SuperTrait)).toBe(true);
+			expect(Spritzr.isa(test, String)).toBe(false);
 		});
 		
 		it('works for a superclass on a trait', function() {
 			var SuperClass = function() {};
 			var Trait = function() {};
 			
-			Spritz.extend(Trait, SuperClass);
+			Spritzr.extend(Trait, SuperClass);
 			
 			var SubClass = function() {};
-			Spritz.spritz(SubClass, Trait);
+			Spritzr.spritz(SubClass, Trait);
 
 			var test = new SubClass();
 			
-			expect(Spritz.isa(test, SuperClass)).toBe(true);
-			expect(Spritz.isa(test, String)).toBe(false);
+			expect(Spritzr.isa(test, SuperClass)).toBe(true);
+			expect(Spritzr.isa(test, String)).toBe(false);
 		});
 		
 		it('works for multiple traits', function() {
@@ -382,14 +382,14 @@ describe("Spritz", function() {
 			var Trait2 = function() {};
 			
 			var SubClass = function() {};
-			Spritz.spritz(SubClass, Trait1);
-			Spritz.spritz(SubClass, Trait2);
+			Spritzr.spritz(SubClass, Trait1);
+			Spritzr.spritz(SubClass, Trait2);
 
 			var test = new SubClass();
 			
-			expect(Spritz.isa(test, Trait1)).toBe(true);
-			expect(Spritz.isa(test, Trait2)).toBe(true);
-			expect(Spritz.isa(test, String)).toBe(false);
+			expect(Spritzr.isa(test, Trait1)).toBe(true);
+			expect(Spritzr.isa(test, Trait2)).toBe(true);
+			expect(Spritzr.isa(test, String)).toBe(false);
 		});
 		
 		it('works for a trait in the given instance', function() {
@@ -398,10 +398,10 @@ describe("Spritz", function() {
 			
 			var test = new TestClass();
 			
-			Spritz.spritz(test, Talent);
+			Spritzr.spritz(test, Talent);
 
-			expect(Spritz.isa(test, Talent)).toBe(true);
-			expect(Spritz.isa(test, String)).toBe(false);
+			expect(Spritzr.isa(test, Talent)).toBe(true);
+			expect(Spritzr.isa(test, String)).toBe(false);
 		});
 	});
 });

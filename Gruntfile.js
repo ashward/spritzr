@@ -26,38 +26,38 @@ module.exports = function(grunt) {
 				browserify : {
 					main : {
 						src : [ 'src/Spritz.js' ],
-						dest : 'dist/spritz_bundle.js'
+						dest : 'dist/spritzr_bundle.js'
 					},
 					src : {
 						src : [ 'src/**/*.js' ],
-						dest : 'dist/spritz_bundle_src.js',
+						dest : 'dist/spritzr_bundle_src.js',
 //						options : {
 //							require : expand([ './src/**/*.js' ])
 //						}
 				},
 					test : {
 						src : [ 'spec/**/*.js' ],
-						dest : 'dist/spritz_bundle_test.js',
+						dest : 'dist/spritzr_bundle_test.js',
 //						options : {
 //							external : [ 'src/**/*.js' ],
 //						}
 					},
 				},
 				jasmine : {
-					src : 'dist/spritz_bundle_src.js',
+					src : 'dist/spritzr_bundle_src.js',
 					options : {
-						specs : 'dist/spritz_bundle_test.js'
+						specs : 'dist/spritzr_bundle_test.js'
 					}
 				},
 				uglify : {
 					all : {
 						files : {
-							'dist/spritz_bundle_min.js' : [ 'dist/spritz_bundle_src.js' ]
+							'dist/spritzr_bundle_min.js' : [ 'dist/spritzr_bundle_src.js' ]
 						}
 					},
 					main : {
 						files : {
-							'dist/app_bundle_main_min.js' : [ 'dist/spritz_bundle.js' ]
+							'dist/app_bundle_main_min.js' : [ 'dist/spritzr_bundle.js' ]
 						}
 					}
 				}

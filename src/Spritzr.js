@@ -1,7 +1,7 @@
 require("./Polyfill");
 
 (function() {
-	var Spritz = {
+	var Spritzr = {
 		_superFunction : function() {
 			if(typeof arguments.callee.caller.prototype == "function") {
 				return arguments.callee.caller.prototype.apply(this, arguments);
@@ -74,7 +74,7 @@ require("./Polyfill");
 				})();
 
 				// And then
-				var spritz = Spritz._getSpritzVarCreate(subClass);
+				var spritz = Spritzr._getSpritzrVarCreate(subClass);
 				spritz.parent = superClass;
 			} else {
 				throw new Error("Can only extend 'classes'");
@@ -91,7 +91,7 @@ require("./Polyfill");
 		 */
 		spritz : function(subject, obj) {
 			if (typeof (subject) == "function") {
-				var spritz = Spritz._getSpritzVarCreate(subject);
+				var spritz = Spritzr._getSpritzrVarCreate(subject);
 
 				if (typeof (obj) == "function") {
 					for ( var key in obj.prototype) {
@@ -105,7 +105,7 @@ require("./Polyfill");
 
 				spritz.traits[obj] = obj;
 			} else {
-				var spritz = Spritz._getSpritzVarCreate(subject);
+				var spritz = Spritzr._getSpritzrVarCreate(subject);
 
 				if (typeof (obj) == "function") {
 					for ( var key in obj.prototype) {
@@ -140,13 +140,13 @@ require("./Polyfill");
 				return true;
 			}
 
-			var spritz = Spritz._getSpritzVar(instance);
+			var spritz = Spritzr._getSpritzrVar(instance);
 
 			if (spritz && spritz.talents[type]) {
 				return true;
 			}
 
-			return Spritz.inherits(instance.constructor, type);
+			return Spritzr.inherits(instance.constructor, type);
 		},
 
 		/**
@@ -164,7 +164,7 @@ require("./Polyfill");
 				return true;
 			}
 
-			var spritz = Spritz._getSpritzVar(clazz);
+			var spritz = Spritzr._getSpritzrVar(clazz);
 
 			// If it's not been spritzed then we won't do anything
 			if (!spritz) {
@@ -181,13 +181,13 @@ require("./Polyfill");
 			}
 
 			// If the parent inherits it
-			if (spritz.parent && Spritz.inherits(spritz.parent, type)) {
+			if (spritz.parent && Spritzr.inherits(spritz.parent, type)) {
 				return true;
 			}
 
 			// If one of the traits inherits it
 			for ( var i in spritz.traits) {
-				if (Spritz.inherits(spritz.traits[i], type)) {
+				if (Spritzr.inherits(spritz.traits[i], type)) {
 					return true;
 				}
 			}
@@ -195,7 +195,7 @@ require("./Polyfill");
 			return false;
 		},
 
-		_getSpritzVarCreate : function(obj) {
+		_getSpritzrVarCreate : function(obj) {
 			if (!obj._$spritz) {
 				obj._$spritz = {
 					parent : null,
@@ -208,23 +208,23 @@ require("./Polyfill");
 			return obj._$spritz;
 		},
 
-		_getSpritzVar : function(obj) {
+		_getSpritzrVar : function(obj) {
 			return obj._$spritz;
 		}
 	};
 /*
 	// Support node.js, AMD and plain ol' JS.
 	if (typeof module !== 'undefined' && typeof module.exports !== 'undefined') {
-		module.exports = Spritz;
+		module.exports = Spritzr;
 	} else {
 		if (typeof define === 'function' && define.amd) {
 			define([], function() {
-				return Spritz;
+				return Spritzr;
 			});
 		} else {
-			window.Spritz = Spritz;
+			window.Spritzr = Spritzr;
 		}
 	}
 */
-	module.exports = Spritz;
+	module.exports = Spritzr;
 })();

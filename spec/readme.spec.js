@@ -1,7 +1,7 @@
 // Tests the code from the examples to make sure they're correct!
-var Spritz = require("../src/Spritz.js");
+var Spritzr = require("../src/Spritzr.js");
 
-describe("Spritz README.md", function() {
+describe("Spritzr README.md", function() {
 	it("Inheritance", function() {
 		function Animal(type) {
 			this.type = type;
@@ -19,7 +19,7 @@ describe("Spritz README.md", function() {
 		};
 		Person.prototype.name = null;
 
-		Spritz.extend(Person, Animal);
+		Spritzr.extend(Person, Animal);
 
 		var steve = new Person("Steve");
 
@@ -27,15 +27,15 @@ describe("Spritz README.md", function() {
 		expect(steve instanceof Person).toBe(true);
 		expect(steve instanceof Animal).toBe(true);
 
-		// Spritz also provides an isa() function which acts like instanceof
-		expect(Spritz.isa(steve, Animal)).toBe(true);
+		// Spritzr also provides an isa() function which acts like instanceof
+		expect(Spritzr.isa(steve, Animal)).toBe(true);
 		
 		// We can also override methods and properties of the super class
 		// but still access them using $super
 		var Tony = function Tony() {
 			this.$super("Tony");
 		};
-		Spritz.extend(Tony, Person);
+		Spritzr.extend(Tony, Person);
 		
 		Tony.prototype.greet = function() {
 			var normalGreeting = this.$super.greet();
@@ -51,13 +51,13 @@ describe("Spritz README.md", function() {
 		var Animal = function() { };
 
 		var Mammal = function() { };
-		Spritz.extend(Mammal, Animal);
+		Spritzr.extend(Mammal, Animal);
 
 		var Amphibian = function() { };
-		Spritz.extend(Amphibian, Animal);
+		Spritzr.extend(Amphibian, Animal);
 
 		var Bird = function() { };
-		Spritz.extend(Bird, Animal);
+		Spritzr.extend(Bird, Animal);
 
 		var Egg = function() { };
 
@@ -68,35 +68,35 @@ describe("Spritz README.md", function() {
 		};
 
 		// And we can apply the trait to specific classes
-		Spritz.spritz(Amphibian, LaysEggs);
-		Spritz.spritz(Bird, LaysEggs);
+		Spritzr.spritz(Amphibian, LaysEggs);
+		Spritzr.spritz(Bird, LaysEggs);
 
 		// Then we can use isa() to work out if an object has a specific trait
 		var cat = new Mammal();
-		expect(Spritz.isa(cat, LaysEggs)).toBe(false);
+		expect(Spritzr.isa(cat, LaysEggs)).toBe(false);
 
 		var frog = new Amphibian();
-		expect(Spritz.isa(frog, LaysEggs)).toBe(true);
+		expect(Spritzr.isa(frog, LaysEggs)).toBe(true);
 
 		var parrot = new Bird();
-		expect(Spritz.isa(parrot, LaysEggs)).toBe(true);
+		expect(Spritzr.isa(parrot, LaysEggs)).toBe(true);
 
 		// Traits are also inherited through class extension
 		var Emu = function() { };
-		Spritz.extend(Emu, Bird);
+		Spritzr.extend(Emu, Bird);
 
 		var emu = new Emu();
-		expect(Spritz.isa(emu, LaysEggs)).toBe(true);
+		expect(Spritzr.isa(emu, LaysEggs)).toBe(true);
 		
 		// or from other traits
 		var Monotreme = function() { };
-		Spritz.spritz(Monotreme, LaysEggs);
+		Spritzr.spritz(Monotreme, LaysEggs);
 		
 		var Platypus = function() { };
-		Spritz.extend(Platypus, Mammal); // A platypus is a mammal
-		Spritz.spritz(Platypus, Monotreme); // But also a monotreme
+		Spritzr.extend(Platypus, Mammal); // A platypus is a mammal
+		Spritzr.spritz(Platypus, Monotreme); // But also a monotreme
 		
 		var ducky = new Platypus();
-		expect(Spritz.isa(ducky, LaysEggs)).toBe(true);
+		expect(Spritzr.isa(ducky, LaysEggs)).toBe(true);
 	});
 });
