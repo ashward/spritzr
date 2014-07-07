@@ -36,7 +36,7 @@ The prototype chain is maintained so that `instanceof` works as expected.
 
 #### Gotchas
 
-###### Super constructor not explicitly called
+##### Super constructor not explicitly called
 When extending a class, the super class constructor will not be implicitly called when the sub class is instantiated. Therefor you should call the `$super()` constructor from within the subclass constructor; for example:
 
 ```js
