@@ -20,7 +20,7 @@
     "colours": "^0.6.0-2"
   },
   "scripts": {
-    "test": "./node_modules/jasmine-node/bin/jasmine-node spec/"
+    "test": "./node_modules/jasmine-node/bin/jasmine-node test/spec/"
   },
   "author": "Surevine <info@surevine.com>"
 }
