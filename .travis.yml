@@ -7,5 +7,5 @@ before_install:
 script: grunt ci-test
 env:
   global:
-  - secure: LWN/gRsdiv84kjEs9FOY/wqO1oS2fBYhM03YwJdQuulkaRwO/U5TFImg+BRiIvhpbl7J4IE4el4du5CLbieiCehcU+p0cRQaRzWQU52WcbEaGxVvFhP7ATNiBc/n5oEiqfUaeyxpiTBEKta5JbiQaTN80cf+XfJ8bdCQUSz8hrg=
-  - secure: MVZj6KB10fDEYGmzYkqM6xR3saVT74snwZspRbsn27r/IYcY8ZSOfUB/1qTDxgc/nRZNez+EcRASPhzI5qOSfad3x3bta0MwQPLTxhbInvLBhIp/V1mgb+P20efR7zfum5rsZ2iDp87neB3kzPJRNG8CO4Yiuvxkxh8N2oeCi4o=
+  - secure: JARXNXdv4mMhRwpnRg5Tym55zPn3mateVKjuu7k/0CvMP8z5+rxELAAtjx6FfvrfjHdRIasXdOaMimgIbmNsCvRc/U/uA1sTNePQ5Qi1lM9ATXhuxkKuqaBjNbnAHNTdHZ8ihZP9kvpYm0AEr1uU/D2Jp/Ymi/LXtqpasUS7h0Q=
+  - secure: d0Igu+IHsSsq6PnyM2efvtMyzUqvGJmqdFGC+sZTATGg0SujEoX9QDlDRUSV1DYY9OGUgZq8mQ1jh4nsnDOGaUVyCAVhNMc/TFzsFvBW87a/vxeQuA4OrmvrLK4qjnEcHMgxA/0IuwL9tO47uZieIOrgbf7dFi8IDd74l8UF06o=
