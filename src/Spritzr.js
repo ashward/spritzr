@@ -3,16 +3,16 @@ require("./Polyfill");
 (function() {
 	var Spritzr = {
 		_superFunction : function() {
-			if(typeof arguments.callee.caller.prototype == "function") {
+			if (typeof arguments.callee.caller.prototype == "function") {
 				return arguments.callee.caller.prototype.apply(this, arguments);
 			}
 		},
-		
+
 		/**
 		 * This is a marker for tracking methods overwritten by talents
 		 */
 		_noPreviousMethod : {},
-			
+
 		/**
 		 * Extends SubClass with superClass in a single-inheritance model. Note
 		 * that this implements prototype inheritance (like Prototype.js) rather
@@ -38,39 +38,42 @@ require("./Polyfill");
 
 						// Copy any existing prototype properties across
 						for ( var i in prevProto) {
-							if(prevProto.hasOwnProperty(i)) {
+							if (prevProto.hasOwnProperty(i)) {
 								this[i] = prevProto[i];
 							}
 						}
-						
+
 						// Set up the faux "$super" reference
 						var $super = function() {
 							// Cache a reference to the real object while we can
-							if(this instanceof subClass) {
+							if (this instanceof subClass) {
 								$super.instance = this;
 							}
-							if(typeof arguments.callee.caller.prototype.__proto__.constructor == "function") {
-								return arguments.callee.caller.prototype.__proto__.constructor.apply(this, arguments);
+							if (typeof arguments.callee.caller.prototype.__proto__.constructor == "function") {
+								return arguments.callee.caller.prototype.__proto__.constructor
+										.apply(this, arguments);
 							}
 						};
-						
+
 						// And copy the superclass prototype functions across
 						for ( var i in superClass.prototype) {
-							if(typeof superClass.prototype[i] == "function") {
+							if (typeof superClass.prototype[i] == "function") {
 								$super[i] = function() {
 									var t;
-									
-									if($super.instance && (this == $super)) {
+
+									if ($super.instance && (this == $super)) {
 										t = $super.instance;
 									} else {
 										t = this;
 									}
-									
-									return superClass.prototype[i].apply(t, arguments);
+
+									return superClass.prototype[i].apply(t,
+											arguments);
 								};
 							}
-						};				
-						
+						}
+						;
+
 						this.$super = $super;
 					};
 
@@ -116,7 +119,7 @@ require("./Polyfill");
 				var spritz = Spritzr._getSpritzrVarCreate(subject);
 
 				var getPropsFrom, clazz;
-				
+
 				if (typeof (obj) == "function") {
 					getPropsFrom = obj.prototype;
 					clazz = obj;
@@ -125,10 +128,10 @@ require("./Polyfill");
 					clazz = obj.constructor;
 				}
 
-				for(var key in getPropsFrom) {
-					if(typeof spritz.removed[key] == "undefined") {
-						if((typeof subject[key] !== "undefined")
-							&& subject.hasOwnProperty(key)) {
+				for ( var key in getPropsFrom) {
+					if (typeof spritz.removed[key] == "undefined") {
+						if ((typeof subject[key] !== "undefined")
+								&& subject.hasOwnProperty(key)) {
 							spritz.removed[key] = subject[key];
 						} else {
 							spritz.removed[key] = Spritzr._noPreviousMethod;
@@ -136,19 +139,21 @@ require("./Polyfill");
 					}
 					subject[key] = getPropsFrom[key];
 				}
-				
+
 				if (typeof (obj) == "function") {
-					obj.call(subject);	// Call the constructor with the subject as 'this'
+					obj.call(subject); // Call the constructor with the subject
+					// as 'this'
 				}
 
 				spritz.talents.push(obj);
 				spritz.talentClasses.push(clazz);
 			}
 		},
-		
+
 		/**
-		 * Does the opposite of <code>spritz()</code>, although currently only removes talents
-		 * from instances (does not work on traits on classes).
+		 * Does the opposite of <code>spritz()</code>, although currently
+		 * only removes talents from instances (does not work on traits on
+		 * classes).
 		 * 
 		 * @param subject
 		 * @param obj
@@ -156,35 +161,37 @@ require("./Polyfill");
 		unspritz : function(subject, obj) {
 			if (typeof (subject) != "function") {
 				var spritz = Spritzr._getSpritzrVar(subject);
-				
-				if(spritz) {
+
+				if (spritz) {
 					var i = spritz.talentClasses.indexOf(obj);
-					if(i > -1) {
+					if (i > -1) {
 						spritz.talents.splice(i, 1);
 						spritz.talentClasses.splice(i, 1);
 					}
 				}
-				
-				// Go through all the talent properties and reinstate existing methods
-				for(key in obj.prototype) {
+
+				// Go through all the talent properties and reinstate existing
+				// methods
+				for (key in obj.prototype) {
 					// Check if the defined method is actually the trait method
-					if(subject[key] === obj.prototype[key]) {
+					if (subject[key] === obj.prototype[key]) {
 						var found = false;
-						
-						for(var i = spritz.talents.length - 1; i >= 0; --i) {
+
+						for (var i = spritz.talents.length - 1; i >= 0; --i) {
 							var talent = spritz.talents[i];
-							
-							if(typeof talent.prototype[key] !== "undefined") {
+
+							if (typeof talent.prototype[key] !== "undefined") {
 								subject[key] = talent.prototype[key];
 								found = true;
 								break;
 							}
 						}
-						
-						if(!found) {
-							if(typeof spritz.removed[key] !== 'undefined') {
-								if(spritz.removed[key] === Spritzr._noPreviousMethod) {
-									// The object previously didn't have the method defined.
+
+						if (!found) {
+							if (typeof spritz.removed[key] !== 'undefined') {
+								if (spritz.removed[key] === Spritzr._noPreviousMethod) {
+									// The object previously didn't have the
+									// method defined.
 									delete subject[key];
 								} else {
 									subject[key] = spritz.removed[key];
@@ -278,9 +285,9 @@ require("./Polyfill");
 					parent : null,
 
 					traits : [],
-					talents : [],	// The actual talent instances
+					talents : [], // The actual talent instances
 					talentClasses : [],
-					
+
 					removed : {}
 				};
 			}
@@ -292,11 +299,6 @@ require("./Polyfill");
 			return obj._$spritz;
 		}
 	};
-/*
- * // Support node.js, AMD and plain ol' JS. if (typeof module !== 'undefined' &&
- * typeof module.exports !== 'undefined') { module.exports = Spritzr; } else {
- * if (typeof define === 'function' && define.amd) { define([], function() {
- * return Spritzr; }); } else { window.Spritzr = Spritzr; } }
- */
+
 	module.exports = Spritzr;
 })();
