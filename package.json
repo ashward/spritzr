@@ -30,11 +30,11 @@
   	"talent"
   ],
   "author": "Ash Ward <ash.wardly@gmail.com>",
-  "license": "MIT",
+  "license": "Apache 2.0",
   "engines": {
     "node": ">=0.8.0"
   },
   "scripts": {
     "test": "./node_modules/jasmine-node/bin/jasmine-node test/spec/"
-  },
+  }
 }
