@@ -17,7 +17,8 @@
     "browserify": "~3",
     "grunt-contrib-connect": "^0.8.0",
     "colours": "^0.6.0-2",
-    "grunt-contrib-clean": "*"
+    "grunt-contrib-clean": "*",
+    "grunt-bower-task": "*"
   },
   "repository": {
     "type": "git",

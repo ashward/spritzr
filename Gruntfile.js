@@ -3,75 +3,76 @@ require('colours');
 module.exports = function(grunt) {
 	var pkg = require("./package.json");
 
-	grunt
-			.initConfig({
-				pkg : pkg,
+	grunt.initConfig({
+		pkg : pkg,
 
-				watch : {
-					all : {
-						files : [ 'src/**/*.*', 'test/**/*.*' ],
-						tasks : [ 'default' ]
-					},
-				},
-				jasmine_node : {
-					specNameMatcher : "Spec",
-					specFolders : [ "test/spec" ],
-					projectRoot : "test/spec",
-					forceExit : true,
-				},
-				jshint : {
-					all : [ 'Gruntfile.js', 'src/**/*.js', 'test/**/*.js' ],
-					options : {
-						jshintrc : '.jshintrc',
+		watch : {
+			all : {
+				files : [ 'src/**/*.*', 'test/**/*.*' ],
+				tasks : [ 'default' ]
+			},
+		},
+		jasmine_node : {
+			specNameMatcher : "Spec",
+			specFolders : [ "test/spec" ],
+			projectRoot : "test/spec",
+			forceExit : true,
+		},
+		jshint : {
+			all : [ 'Gruntfile.js', 'src/**/*.js', 'test/**/*.js' ],
+			options : {
+				jshintrc : '.jshintrc',
+			}
+		},
+		browserify : {
+			main : {
+				src : [ 'src/Spritzr.js' ],
+				dest : 'dist/spritzr.js',
+				options : {
+					bundleOptions : {
+						standalone : 'Spritzr'
 					}
-				},
-				browserify : {
-					main : {
-						src : [ 'src/Spritzr.js' ],
-						dest : 'dist/spritzr.js',
-						options : {
-							bundleOptions : {
-								standalone : 'Spritzr'
-							}
-						}
-					},
-					src : {
-						src : [ 'src/**/*.js' ],
-						dest : 'dist/spritzr_src.js',
+				}
+			},
+			src : {
+				src : [ 'src/**/*.js' ],
+				dest : 'dist/spritzr_src.js',
 
-					},
-					test : {
-						src : [ 'test/spec/**/*.js' ],
-						dest : 'dist/spritzr_test.js',
-						options : {
-							bundleOptions : {
-								debug : true
-							}
-						}
-					},
-				},
-				jasmine : {
-					src : 'dist/spritzr_src.js',
-					options : {
-						specs : 'dist/spritzr_test.js'
+			},
+			test : {
+				src : [ 'test/spec/**/*.js' ],
+				dest : 'dist/spritzr_test.js',
+				options : {
+					bundleOptions : {
+						debug : true
 					}
-				},
-				uglify : {
-					all : {
-						files : {
-							'dist/spritzr.min.js' : [ 'dist/spritzr_src.js' ]
-						}
-					},
-					main : {
-						files : {
-							'dist/spritzr.min.js' : [ 'dist/spritzr.js' ]
-						}
-					}
-				},
-				clean : [
-				    "dist"
-				]
-			});
+				}
+			},
+		},
+		jasmine : {
+			src : 'dist/spritzr_src.js',
+			options : {
+				specs : 'dist/spritzr_test.js'
+			}
+		},
+		uglify : {
+			all : {
+				files : {
+					'dist/spritzr.min.js' : [ 'dist/spritzr_src.js' ]
+				}
+			},
+			main : {
+				files : {
+					'dist/spritzr.min.js' : [ 'dist/spritzr.js' ]
+				}
+			}
+		},
+		clean : [ "dist" ],
+		bower : {
+			install : {
+			}
+		}
+	});
 
 	grunt.loadNpmTasks('grunt-contrib-watch');
 	grunt.loadNpmTasks('grunt-contrib-jasmine');
@@ -80,6 +81,7 @@ module.exports = function(grunt) {
 	grunt.loadNpmTasks('grunt-contrib-jshint');
 	grunt.loadNpmTasks('grunt-contrib-uglify');
 	grunt.loadNpmTasks('grunt-jasmine-node');
+	grunt.loadNpmTasks('grunt-bower-task');
 
 	grunt.registerTask('browserstack', 'Browserstack runner', function() {
 		var done = this.async();
@@ -102,11 +104,11 @@ module.exports = function(grunt) {
 					done();
 				});
 	});
-	
-	// Default task.
-	grunt.registerTask('default', [ 'clean', 'jasmine_node', 'browserify', 'jasmine',
-			'uglify' ]);
 
-	grunt.registerTask('ci-test', [ 'default' , 'browserstack' ]);
+	// Default task.
+	grunt.registerTask('default', [ 'clean', 'jasmine_node', 'browserify',
+			'jasmine', 'uglify' ]);
+
+	grunt.registerTask('ci-test', [ 'default', 'bower:install', 'browserstack' ]);
 
 };
