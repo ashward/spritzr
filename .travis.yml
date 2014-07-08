@@ -1,10 +1,11 @@
 language: node_js
 node_js:
-  - "0.11"
-  - "0.10"
+- '0.11'
+- '0.10'
 before_install:
-  - npm i -g browserstack-runner
+- npm i -g browserstack-runner
 script: grunt ci-test
 env:
   global:
-    - secure: PUT_YOUR_ENCRYPTED_KEY_HERE
+  - secure: LWN/gRsdiv84kjEs9FOY/wqO1oS2fBYhM03YwJdQuulkaRwO/U5TFImg+BRiIvhpbl7J4IE4el4du5CLbieiCehcU+p0cRQaRzWQU52WcbEaGxVvFhP7ATNiBc/n5oEiqfUaeyxpiTBEKta5JbiQaTN80cf+XfJ8bdCQUSz8hrg=
+  - secure: MVZj6KB10fDEYGmzYkqM6xR3saVT74snwZspRbsn27r/IYcY8ZSOfUB/1qTDxgc/nRZNez+EcRASPhzI5qOSfad3x3bta0MwQPLTxhbInvLBhIp/V1mgb+P20efR7zfum5rsZ2iDp87neB3kzPJRNG8CO4Yiuvxkxh8N2oeCi4o=

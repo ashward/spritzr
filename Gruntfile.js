@@ -107,6 +107,6 @@ module.exports = function(grunt) {
 	grunt.registerTask('default', [ 'clean', 'jasmine_node', 'browserify', 'jasmine',
 			'uglify' ]);
 
-	grunt.registerTask('ci-test', [ 'default'/* , 'browserstack' */]);
+	grunt.registerTask('ci-test', [ 'default' , 'browserstack' ]);
 
 };
