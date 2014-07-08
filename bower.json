@@ -6,5 +6,8 @@
   ],
   "main": "dist/spritzr_bundle.js",
   "license": "GPL3",
-  "private": true
+  "private": true,
+  "dependencies": {
+    "jasmine": "~2.0.0"
+  }
 }
