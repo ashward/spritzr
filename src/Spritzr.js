@@ -115,15 +115,17 @@ require("./Polyfill");
 			} else {
 				var spritz = Spritzr._getSpritzrVarCreate(subject);
 
-				var getPropsFrom;
+				var getPropsFrom, clazz;
 				
 				if (typeof (obj) == "function") {
 					getPropsFrom = obj.prototype;
+					clazz = obj;
 				} else {
-					getPropsFrom = onj;
+					getPropsFrom = obj;
+					clazz = obj.constructor;
 				}
 
-				for ( var key in getPropsFrom) {
+				for(var key in getPropsFrom) {
 					if(typeof spritz.removed[key] == "undefined") {
 						if((typeof subject[key] !== "undefined")
 							&& subject.hasOwnProperty(key)) {
@@ -134,8 +136,13 @@ require("./Polyfill");
 					}
 					subject[key] = getPropsFrom[key];
 				}
+				
+				if (typeof (obj) == "function") {
+					obj.call(subject);	// Call the constructor with the subject as 'this'
+				}
 
 				spritz.talents.push(obj);
+				spritz.talentClasses.push(clazz);
 			}
 		},
 		
@@ -151,9 +158,10 @@ require("./Polyfill");
 				var spritz = Spritzr._getSpritzrVar(subject);
 				
 				if(spritz) {
-					var i = spritz.talents.indexOf(obj);
+					var i = spritz.talentClasses.indexOf(obj);
 					if(i > -1) {
 						spritz.talents.splice(i, 1);
+						spritz.talentClasses.splice(i, 1);
 					}
 				}
 				
@@ -211,7 +219,7 @@ require("./Polyfill");
 
 			var spritz = Spritzr._getSpritzrVar(instance);
 
-			if (spritz && (spritz.talents.indexOf(type) > -1)) {
+			if (spritz && (spritz.talentClasses.indexOf(type) > -1)) {
 				return true;
 			}
 
@@ -270,7 +278,8 @@ require("./Polyfill");
 					parent : null,
 
 					traits : [],
-					talents : [],
+					talents : [],	// The actual talent instances
+					talentClasses : [],
 					
 					removed : {}
 				};

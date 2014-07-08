@@ -101,4 +101,57 @@ var ducky = new Platypus();
 expect(Spritzr.isa(ducky, LaysEggs)).toBe(true);
 
 	});
+	
+	it('Talents', function() {
+		
+// We have a class describing people
+var Person = function(firstName, lastName) {
+	this.firstName = firstName;
+	this.lastName = lastName;
+};
+Person.prototype.firstName = null;
+Person.prototype.lastName = null;
+Person.prototype.getDisplayName = function() {
+	return this.firstName + ' ' + this.lastName;
+};
+
+var sharon = new Person("Sharon", "Ackerman");
+var tony = new Person("Tony", "Jones");
+
+// We can define a talent to describe friendship
+var Friend = function(nickname) {
+	this.nickname = nickname;
+};
+Friend.prototype.nickname = null;
+Friend.prototype.getDisplayName = function() {
+	return this.firstName + ' "' + this.nickname + '" ' + this.lastName;
+};
+
+// And add a new talent to our friends
+Spritzr.spritz(sharon, new Friend('The Shazza'));
+
+// We can then check for existence of the talent to find out if a person is our friend
+expect(Spritzr.isa(sharon, Friend)).toBe(true);
+expect(Spritzr.isa(tony, Friend)).toBe(false);
+
+// And the methods should be overridden appropriately
+expect(sharon.getDisplayName()).toBe('Sharon "The Shazza" Ackerman');
+expect(tony.getDisplayName()).toBe('Tony Jones');
+
+// We can also remove talents from an instance using the amazing titled unspritz function
+Spritzr.unspritz(sharon, Friend);
+expect(sharon.getDisplayName()).toBe('Sharon Ackerman');
+
+// We don't need to instantiate the talent first either - the constructor will automatically be called
+var HasAccount = function() {
+	this.username = (this.firstName.substr(0,1) + this.lastName).toLowerCase();
+};
+HasAccount.prototype.username = null;
+
+Spritzr.spritz(tony, HasAccount); // This adds the methods/properties and calls the constructor
+
+expect(Spritzr.isa(tony, HasAccount)).toBe(true);
+expect(tony.username).toBe("tjones");
+
+	});
 });

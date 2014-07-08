@@ -252,7 +252,21 @@ describe("Spritzr", function() {
 			
 			expect(test.method()).toBe("test");
 		});
-		
+
+		it('instantiates a talent if the talent is a class', function() {
+			var TestClass = function() {};
+			
+			var TestTalent = function() {
+				this.talentInitialised = true;
+			};
+			
+			var test = new TestClass();
+			
+			Spritzr.spritz(test, TestTalent);
+			
+			expect(test.talentInitialised).toBe(true);
+		});
+
 		it('can override class method with a talent', function() {
 			var TestClass = function() {};
 			TestClass.prototype.method = function() {
