@@ -1,4 +1,4 @@
-var Spritzr = require("../src/Spritzr.js");
+var Spritzr = require("../../src/Spritzr.js");
 
 describe("Spritzr", function() {
 	describe("Inheritance", function() {

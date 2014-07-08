@@ -1,5 +1,5 @@
 // Tests the code from the examples to make sure they're correct!
-var Spritzr = require("../src/Spritzr.js");
+var Spritzr = require("../../src/Spritzr.js");
 
 describe("Spritzr README.md", function() {
 	it("Inheritance", function() {
