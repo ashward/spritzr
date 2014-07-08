@@ -69,10 +69,10 @@ module.exports = function(grunt) {
     grunt.registerTask('browserstack', 'Browserstack runner', function() {
         var done = this.async()
         require('child_process').exec('browserstack-runner', function(error, stdout, stderr) {
-            console.log(error, stdout, stderr)
             if (error) {
                 console.log('Failed due to error'.red)
-                console.log(error.toString)
+                console.log(error.toString())
+                if (stdout) console.log(stdout)
                 return done(error)
             }
             if (stderr) {
