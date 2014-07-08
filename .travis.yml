@@ -4,7 +4,7 @@ node_js:
   - "0.10"
 before_install:
   - npm i -g browserstack-runner
-script: browserstack-runner
+script: grunt ci-test
 env:
   global:
     - secure: PUT_YOUR_ENCRYPTED_KEY_HERE
