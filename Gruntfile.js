@@ -9,7 +9,10 @@ module.exports = function(grunt) {
 		watch : {
 			all : {
 				files : [ 'src/**/*.*', 'test/**/*.*' ],
-				tasks : [ 'default' ]
+				tasks : [ 'clean', 'browserify' ],
+				options : {
+					livereload: true
+				}
 			},
 		},
 		jasmine_node : {
@@ -69,7 +72,14 @@ module.exports = function(grunt) {
 		},
 		clean : [ "dist" ],
 		bower : {
-			install : {
+			install : {}
+		},
+		connect : {
+			server : {
+				options : {
+					livereload: true,
+					open: 'http://localhost:8000/test/test.html'
+				}
 			}
 		}
 	});
@@ -82,6 +92,7 @@ module.exports = function(grunt) {
 	grunt.loadNpmTasks('grunt-contrib-uglify');
 	grunt.loadNpmTasks('grunt-jasmine-node');
 	grunt.loadNpmTasks('grunt-bower-task');
+	grunt.loadNpmTasks('grunt-contrib-connect');
 
 	grunt.registerTask('browserstack', 'Browserstack runner', function() {
 		var done = this.async();
@@ -109,6 +120,8 @@ module.exports = function(grunt) {
 	grunt.registerTask('default', [ 'clean', 'jasmine_node', 'browserify',
 			'jasmine', 'uglify' ]);
 
-	grunt.registerTask('ci-test', [ 'default', 'bower:install', 'browserstack' ]);
+	grunt.registerTask('ci-test',
+			[ 'default', 'bower:install', 'browserstack' ]);
 
+	grunt.registerTask('browser-test', [ 'clean', 'browserify', 'connect', 'watch' ]);
 };

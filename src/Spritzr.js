@@ -35,6 +35,7 @@ require("./Polyfill");
 				subClass.prototype = (function() {
 					var proto = function() {
 						this.constructor = subClass;
+						this.$_spritzr_superClass = superClass;
 
 						// Copy any existing prototype properties across
 						for ( var i in prevProto) {
@@ -47,11 +48,21 @@ require("./Polyfill");
 						var $super = function() {
 							// Cache a reference to the real object while we can
 							if (this instanceof subClass) {
-								$super.instance = this;
+								$super.$_spritzr_instance = this;
 							}
-							if (typeof arguments.callee.caller.prototype.__proto__.constructor == "function") {
-								return arguments.callee.caller.prototype.__proto__.constructor
-										.apply(this, arguments);
+							
+							var superConstructor;
+							
+							if(arguments.callee.caller.prototype.$_spritzr_superClass) {
+								superConstructor = arguments.callee.caller.prototype.$_spritzr_superClass;
+							} else if(Object.getPrototypeOf) {
+								superConstructor = Object.getPrototypeOf(arguments.callee.caller.prototype).constructor;
+							} else if(arguments.callee.caller.prototype.__proto__) {
+								superConstructor = arguments.callee.caller.prototype.__proto__.constructor;
+							} 
+
+							if (typeof superConstructor == "function") {
+								return superConstructor.apply(this, arguments);
 							}
 						};
 
@@ -61,8 +72,8 @@ require("./Polyfill");
 								$super[i] = function() {
 									var t;
 
-									if ($super.instance && (this == $super)) {
-										t = $super.instance;
+									if ($super.$_spritzr_instance && (this == $super)) {
+										t = $super.$_spritzr_instance;
 									} else {
 										t = this;
 									}
