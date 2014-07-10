@@ -10,11 +10,43 @@
     	"firefox_previous",
     	"firefox_latest",
     	"safari_latest",
+    	"opera_latest",
     	"ie_6",
     	"ie_7",
     	"ie_8",
     	"ie_9",
     	"ie_10",
-    	"ie_11"
+    	"ie_11",
+    	"firefox_3_6",
+    	{
+			"os": "android",
+			"os_version": "2.3",
+			"device": "Samsung Galaxy S II"
+		},
+    	{
+			"os": "android",
+			"os_version": "4.0",
+			"device": "Samsung Galaxy Nexus"
+		},
+   		{
+			"os": "android",
+			"os_version": "4.1",
+			"device": "Samsung Galaxy S III"
+		},
+   		{
+			"os": "android",
+			"os_version": "4.2",
+			"device": "LG Nexus 4"
+		},
+		{
+			"os": "ios",
+			"os_version": "7.0",
+			"device": "iPhone 5S"
+		},
+		{
+			"os": "ios",
+			"os_version": "6.0",
+			"device": "iPhone 5S"
+		}
      ]
 }
