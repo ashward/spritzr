@@ -1,6 +1,10 @@
 # Spritzr
 ## Build Status
 [![Build Status](https://travis-ci.org/ashward/spritzr.svg?branch=master)](https://travis-ci.org/ashward/spritzr)
+
+## Thanks
+Many thanks to [BrowserStack](https://www.browserstack.com/) for providing a free account to run our automated tests on loads of different browsers!
+
 ## API
 ### Inheritance
 Spritzr has an `extend` function which implements a basic single inheritance model.
