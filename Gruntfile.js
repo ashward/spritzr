@@ -11,7 +11,7 @@ module.exports = function(grunt) {
 				files : [ 'src/**/*.*', 'test/**/*.*' ],
 				tasks : [ 'clean', 'browserify' ],
 				options : {
-					livereload: true
+					livereload : true
 				}
 			},
 		},
@@ -72,13 +72,17 @@ module.exports = function(grunt) {
 		},
 		clean : [ "dist" ],
 		bower : {
-			install : {}
+			install : {
+				options: {
+					copy: false
+				}
+			}
 		},
 		connect : {
 			server : {
 				options : {
-					livereload: true,
-					open: 'http://localhost:8000/test/test.html'
+					livereload : true,
+					open : 'http://localhost:8000/test/test.html'
 				}
 			}
 		}
@@ -123,5 +127,6 @@ module.exports = function(grunt) {
 	grunt.registerTask('ci-test',
 			[ 'default', 'bower:install', 'browserstack' ]);
 
-	grunt.registerTask('browser-test', [ 'clean', 'browserify', 'connect', 'watch' ]);
+	grunt.registerTask('browser-test', [ 'clean', 'bower:install',
+			'browserify', 'connect', 'watch' ]);
 };

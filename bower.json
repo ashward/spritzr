@@ -5,8 +5,8 @@
     "Ash Ward <ash.wardly@gmail.com>"
   ],
   "main": "dist/spritzr_bundle.js",
-  "license": "GPL3",
-  "private": true,
+  "license": "Apache2.0",
+  "private": false,
   "devDependencies": {
     "jasmine": "~1.3.x"
   }
