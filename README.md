@@ -16,18 +16,18 @@ Spritzr was inspired by a great traits/talents library CocktailJS https://github
 Spritzr is automatically unit tested against the following browsers:
 
 * Internet Explorer 6, 7, 8, 9, 10 and 11
-* Firefox latest, previous and 3.6 versions
-* Chrome latest and previous versions
+* Firefox latest and 3.6 versions
+* Chrome latest version
 * Safari desktop latest version
 * Opera desktop latest version
-* Android 2.3, 4.0, 4.1 and 4.2
-* iOS 6 and 7
+* Android 2.3 and 4.2
+* iOS 7
 
 It is also tested on node.js version 0.10 and PhantomJS (headless webkit).
 
 ----
 
-<a href="https://www.browserstack.com/">![Browserstack](https://rawgit.com/ashward/spritzr/master/static/images/browserstack.svg =x25)</a>
+<a href="https://www.browserstack.com/"><img src="https://rawgit.com/ashward/spritzr/master/static/images/browserstack.svg" alt="BrowserStack" height="25" /></a>
 
 Special thanks to [BrowserStack](https://www.browserstack.com/) for providing a free account to run our automated tests on all these different browsers and operating systems!
 
