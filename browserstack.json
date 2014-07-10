@@ -3,7 +3,7 @@
     "key": "BROWSERSTACK_KEY",
     "test_path": "test/test.html",
     "test_framework": "jasmine",
-    "timeout": 60,
+    "timeout": 120,
     "browsers": [
         "chrome_previous",
     	"chrome_latest",
