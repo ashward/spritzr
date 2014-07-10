@@ -1,9 +1,37 @@
 # Spritzr
-## Build Status
 [![Build Status](https://travis-ci.org/ashward/spritzr.svg?branch=master)](https://travis-ci.org/ashward/spritzr)
 
-## Thanks
-Many thanks to [BrowserStack](https://www.browserstack.com/) for providing a free account to run our automated tests on loads of different browsers!
+## About spritzr
+Spritzr is an inheritance/traits/talents library for node.js and the browser.
+
+It aims to provide three things:
+
+* Extension: to do classical single inheritance
+* Traits: mixins at a class level and with state (a bit like multiple inheritance)
+* Talents: like traits, but applied to a single instance (and they can also be removed at will)
+
+Spritzr was inspired by a great traits/talents library CocktailJS https://github.com/CocktailJS/cocktail.
+
+### Compatibility
+Spritzr is automatically unit tested against the following browsers:
+
+* Internet Explorer 6, 7, 8, 9, 10 and 11
+* Firefox latest, previous and 3.6 versions
+* Chrome latest and previous versions
+* Safari desktop latest version
+* Opera desktop latest version
+* Android 2.3, 4.0, 4.1 and 4.2
+* iOS 6 and 7
+
+It is also tested on node.js version 0.10 and PhantomJS (headless webkit).
+
+----
+
+<a href="https://www.browserstack.com/">![Browserstack](https://rawgit.com/ashward/spritzr/master/static/images/browserstack.svg =x25)</a>
+
+Special thanks to [BrowserStack](https://www.browserstack.com/) for providing a free account to run our automated tests on all these different browsers and operating systems!
+
+----
 
 ## API
 ### Inheritance
@@ -187,3 +215,13 @@ Spritzr.spritz(tony, HasAccount); // This adds the methods/properties and calls 
 expect(Spritzr.isa(tony, HasAccount)).toBe(true);
 expect(tony.username).toBe("tjones");
 ```
+
+## Caveats
+The library is reasonably well tested, but there are some flows which haven't been thought about much so far:
+
+* The effect of spritzing the same trait or talent twice into a class of object is untested and undefined.
+* New properties added to a trait after it has been spritzed into a class won't be reflected in the class (so if you add trait A into class B, then add a method to A it won't be reflected in B). You should set up your class hierarchy at the start of the application and avoid mutating it later.
+* Equally, methods added to a talent after it's been spritzed into an instance also won't be reflected in the instance.
+* Probably a load of other stuff I haven't thought of!
+
+The intention is to overcome these caveats in the future - it should be possible.
