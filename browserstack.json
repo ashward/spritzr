@@ -26,7 +26,7 @@
     	{
 			"os": "android",
 			"os_version": "4.0",
-			"device": "Samsung Galaxy Nexus"
+			"device": "HTC One X"
 		},
    		{
 			"os": "android",
@@ -41,7 +41,7 @@
 		{
 			"os": "ios",
 			"os_version": "7.0",
-			"device": "iPhone 5S"
+			"device": "iPad 3rd (7.0)"
 		},
 		{
 			"os": "ios",
