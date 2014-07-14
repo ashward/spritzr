@@ -8,7 +8,7 @@
     "browserify": "~3",
     "colours": "^0.6.0-2",
     "grunt": "~0.4",
-    "grunt-bower-task": "^0.3.4",
+    "grunt-bower-install-simple": "^0.9.3",
     "grunt-browserify": "~2",
     "grunt-cli": "~0.1.13",
     "grunt-contrib-clean": "*",

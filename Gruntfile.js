@@ -71,15 +71,13 @@ module.exports = function(grunt) {
 			}
 		},
 		clean : [ "dist" ],
-		bower : {
-			install : {
-				options: {
-					layout: "byComponent",
-					targetDir: "./web-lib",
-					cleanBowerDir: true
-				}
-			}
-		},
+	    "bower-install-simple": {
+	        options: {
+	            color:       true,
+	            production:  false,
+	            directory:   "web-lib"
+	        }
+	    },
 		connect : {
 			server : {
 				options : {
@@ -97,9 +95,11 @@ module.exports = function(grunt) {
 	grunt.loadNpmTasks('grunt-contrib-jshint');
 	grunt.loadNpmTasks('grunt-contrib-uglify');
 	grunt.loadNpmTasks('grunt-jasmine-node');
-	grunt.loadNpmTasks('grunt-bower-task');
+	grunt.loadNpmTasks('grunt-bower-install-simple');
 	grunt.loadNpmTasks('grunt-contrib-connect');
 
+	grunt.registerTask("bower-install", [ "bower-install-simple" ]);
+	
 	grunt.registerTask('browserstack', 'Browserstack runner', function() {
 		var done = this.async();
 		require('child_process').exec('browserstack-runner --verbose',
@@ -127,8 +127,8 @@ module.exports = function(grunt) {
 			'jasmine', 'uglify' ]);
 
 	grunt.registerTask('ci-test',
-			[ 'default', 'bower:install', 'browserstack' ]);
+			[ 'default', 'bower-install', 'browserstack' ]);
 
-	grunt.registerTask('browser-test', [ 'clean', 'bower:install',
+	grunt.registerTask('browser-test', [ 'clean', 'bower-install',
 			'browserify', 'connect', 'watch' ]);
 };
