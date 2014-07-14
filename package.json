@@ -1,7 +1,7 @@
 {
   "name": "spritzr",
-  "version": "0.0.2",
-  "description": "Provides a basic but (hopefully) useful inheritance/traits/talents library for js",
+  "version": "0.1.0",
+  "description": "Provides an inheritance/traits/talents library for js",
   "main": "src/Spritzr.js",
   "dependencies": {},
   "devDependencies": {
