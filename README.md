@@ -222,6 +222,8 @@ The library is reasonably well tested, but there are some flows which haven't be
 * The effect of spritzing the same trait or talent twice into a class of object is untested and undefined.
 * New properties added to a trait after it has been spritzed into a class won't be reflected in the class (so if you add trait A into class B, then add a method to A it won't be reflected in B). You should set up your class hierarchy at the start of the application and avoid mutating it later.
 * Equally, methods added to a talent after it's been spritzed into an instance also won't be reflected in the instance.
+* There is no cycle checking in the isa() method, so if you have circular class dependencies then it's going to go into infinite recursion.
+* Extending a class twice is currently not prevented and will probably cause some wierd behaviour.
 * Probably a load of other stuff I haven't thought of!
 
 The intention is to overcome these caveats in the future - it should be possible.

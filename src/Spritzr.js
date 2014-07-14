@@ -16,17 +16,6 @@ require("./Polyfill");
 
 (function() {
 	var Spritzr = {
-		_superFunction : function() {
-			if (typeof arguments.callee.caller.prototype == "function") {
-				return arguments.callee.caller.prototype.apply(this, arguments);
-			}
-		},
-
-		/**
-		 * This is a marker for tracking methods overwritten by talents
-		 */
-		_noPreviousMethod : {},
-
 		/**
 		 * Extends SubClass with superClass in a single-inheritance model. Note
 		 * that this implements prototype inheritance (like Prototype.js) rather
@@ -303,6 +292,11 @@ require("./Polyfill");
 
 			return false;
 		},
+
+		/**
+		 * This is a marker for tracking methods overwritten by talents
+		 */
+		_noPreviousMethod : {},
 
 		_getSpritzrVarCreate : function(obj) {
 			if (!obj._$spritz) {
