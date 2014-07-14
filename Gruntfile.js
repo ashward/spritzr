@@ -74,7 +74,9 @@ module.exports = function(grunt) {
 		bower : {
 			install : {
 				options: {
-					copy: false
+					layout: "byComponent",
+					targetDir: "./web-lib",
+					cleanBowerDir: true
 				}
 			}
 		},
